@@ -1,5 +1,6 @@
 <?php
  return[
+     'Testing' => 'Testeando',
      'Transfer Request' => 'Solicitud de transferencia',
      'First Select a Product' => 'Primero seleccione un producto',
      'Requests' => 'Solicitudes',
