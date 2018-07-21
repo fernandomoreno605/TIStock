@@ -49,7 +49,7 @@ class TransferenciasController extends Controller
         $searchModel = new TransferenciasSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
+        return $this->render('common/index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -61,7 +61,7 @@ class TransferenciasController extends Controller
         $searchModel = new TransferenciasSearch();
         $dataProvider = $searchModel->searchRecived(Yii::$app->request->queryParams);
 
-        return $this->render('received', [
+        return $this->render('common/received', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
 
@@ -83,7 +83,7 @@ class TransferenciasController extends Controller
         $validation = $this->findModel($id);
 
         if ($validation->hoteles_hotel_id == $_SESSION['current_hotel'] || $validation->transferencia_destino_id == $_SESSION['current_hotel']){
-            return $this->render('view', [
+            return $this->render('common/view', [
                 'model' => $this->findModel($id),
                 'dataProvider' => $dataProvider,
                 'hotelName' => $hotelName,
@@ -169,7 +169,7 @@ class TransferenciasController extends Controller
 
         }
 
-        return $this->render('create', [
+        return $this->render('common/create', [
             'model' => $model,
             'hotelsProvider' => $hotelsProvider,
             'count' => $count,
@@ -206,7 +206,7 @@ class TransferenciasController extends Controller
         //$model->transferencia_status != 'entregada'
         if ($model->hoteles_hotel_id == $_SESSION['current_hotel'] or $model->transferencia_destino_id == $_SESSION['current_hotel']){
             if ($model->transferencia_status != 'delivered'){
-                return $this->render('update', [
+                return $this->render('common/update', [
                     'model' => $model,
                     'hotelsProvider' => $hotelsProvider,
                     'destination' => $destination,
@@ -282,14 +282,14 @@ class TransferenciasController extends Controller
                 return $this->redirect(['view', 'id' => $model->transferencia_id]);
 
             }catch (\Exception $e){
-                return $this->render('_assign', [
+                return $this->render('common/_assign', [
                     'itemProvider' => $itemProvider,
                     'alert' => $this->error(),
                 ]);
             }
 
         }
-        return $this->render('_assign', [
+        return $this->render('common/_assign', [
             'itemProvider' => $itemProvider,
             'alert' => null,
         ]);
