@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use frontend\models\HotelesSearch;
 use Yii;
 use frontend\models\Productos;
 use frontend\models\ProductosSearch;
@@ -66,34 +67,55 @@ class ProductosController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $productList = $searchModel->productsAsArray();
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-            'productList' => $productList,
-        ]);
+        if ($_SESSION['user_type'] == 'admin'){
+            return $this->render('admin/index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+                'productList' => $productList,
+            ]);
+        }else{
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+                'productList' => $productList,
+            ]);
+
+        }
     }
 
     public function actionView($id)
     {
         $data = $this->findModel($id);
-        if ($data->hoteles_hotel_id != $_SESSION['current_hotel']){
-            return $this->redirect(['index']);
+        if ($_SESSION['user_type'] != 'admin'){
+            if ($data->hoteles_hotel_id != $_SESSION['current_hotel']){
+                return $this->redirect(['index']);
 
+            }else{
+                return $this->render('view', [
+                    'model' => $this->findModel($id),
+                ]);
+            }
         }else{
-            return $this->render('view', [
+            return $this->render('admin/view', [
                 'model' => $this->findModel($id),
             ]);
-
         }
     }
 
     public function actionCreate()
     {
         $model = new Productos();
+        $hotelSearch = new HotelesSearch();
+        $hotelProvider = $hotelSearch->listing();
 
         if ($model->load(Yii::$app->request->post())) {
 
-            $imageName = $model->product_name.$_SESSION['current_hotel'];
+            if ($_SESSION['user_type'] != 'admin'){
+                $imageName = $model->product_name.$_SESSION['current_hotel'];
+                $model->hoteles_hotel_id = $_SESSION['current_hotel'];
+            }else{
+                $imageName = $model->product_name.$model->hoteles_hotel_id;
+            }
 
             $file = UploadedFile::getInstance($model,'file');
             if ($file != null){
@@ -104,21 +126,29 @@ class ProductosController extends Controller
             if ($model->product_stock == 0){
                 $model->product_status = 'inactive';
             }
-            $model->hoteles_hotel_id = $_SESSION['current_hotel'];
-            $model->product_created_date = date('Y:m:d');
-            $model->save();
-            return $this->redirect(['view', 'id' => $model->product_id]);
 
+            $model->product_created_date = date('Y:m:d');
+            if ($model->save()){
+                return $this->redirect(['view', 'id' => $model->product_id]);
+            }
         }
 
-        return $this->render('create', [
+        if ($_SESSION['user_type'] != 'admin'){
+            return $this->render('create', [
+                'model' => $model,
+            ]);
+        }
+        return $this->render('admin/create', [
             'model' => $model,
+            'hotelProvider' => $hotelProvider,
         ]);
     }
 
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $hotelSearch = new HotelesSearch();
+        $hotelProvider = $hotelSearch->listing();
 
         if ($model->load(Yii::$app->request->post())) {
 
@@ -135,25 +165,37 @@ class ProductosController extends Controller
             $model->save();
             return $this->redirect(['view', 'id' => $model->product_id]);
         }
-        if ($model->hoteles_hotel_id != $_SESSION['current_hotel']){
-            return $this->redirect(['index']);
-        }else{
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+        if ($_SESSION['user_type'] != 'admin'){
+            if ($model->hoteles_hotel_id != $_SESSION['current_hotel']){
+                return $this->redirect(['index']);
+            }else{
+                return $this->render('update', [
+                    'model' => $model,
+                ]);
+            }
         }
+        return $this->render('admin/update', [
+            'model' => $model,
+            'hotelProvider' =>$hotelProvider,
+        ]);
+
     }
 
     public function actionDelete($id)
     {
         $validation = $this->findModel($id);
-        if ($validation->hoteles_hotel_id != $_SESSION['current_hotel']){
-            return $this->redirect(['index']);
-        }else{
-            $this->findModel($id)->delete();
+        if ($_SESSION['user_type'] != 'admin'){
+            if ($validation->hoteles_hotel_id != $_SESSION['current_hotel']){
+                return $this->redirect(['index']);
+            }else{
+                $this->findModel($id)->delete();
+                return $this->redirect(['index']);
+            }
         }
+        $this->findModel($id)->delete();
         return $this->redirect(['index']);
     }
+
     public function successful(){
         $alert = '<div class="alert alert-success alert-dismissable" role="alert">
                     '.Yii::t('app', 'Update Successful').'

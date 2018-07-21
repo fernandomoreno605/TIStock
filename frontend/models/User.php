@@ -21,8 +21,14 @@ use Yii;
  * @property int $created_at
  * @property int $updated_at
  * @property string $user_image
+ * @property string $user_type
  *
- * @property Rentas[] $rentas
+ * @property AuthHotel[] $authHotels
+ * @property Prestamos[] $prestamos
+ * @property Request[] $requests
+ * @property Request[] $requests0
+ * @property Transferencias[] $transferencias
+ * @property Transferencias[] $transferencias0
  * @property Hoteles $hotelesHotel
  */
 class User extends \yii\db\ActiveRecord
@@ -45,10 +51,11 @@ class User extends \yii\db\ActiveRecord
     {
         return [
             [['file'],'file'],
-            [['username', 'first_name', 'last_name', 'colaborator_no', 'hoteles_hotel_id', 'auth_key', 'password_hash', 'email', 'created_at', 'updated_at',], 'required'],
+            [['username', 'first_name', 'last_name', 'colaborator_no', 'hoteles_hotel_id', 'auth_key', 'password_hash', 'email', 'created_at', 'updated_at', 'user_type'], 'required'],
             [['colaborator_no', 'hoteles_hotel_id', 'status', 'created_at', 'updated_at'], 'integer'],
             [['username', 'password_hash', 'password_reset_token', 'email','confirm_password'], 'string', 'max' => 255],
             [['first_name', 'last_name'], 'string', 'max' => 50],
+            [['user_type'], 'string'],
             [['user_image'], 'string', 'max' => 250],
             [['auth_key'], 'string', 'max' => 32],
             [['username'], 'unique'],
@@ -91,10 +98,6 @@ class User extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getRentas()
-    {
-        return $this->hasMany(Rentas::className(), ['users_user_id' => 'id']);
-    }
 
     /**
      * @return \yii\db\ActiveQuery
@@ -103,4 +106,36 @@ class User extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Hoteles::className(), ['hotel_id' => 'hoteles_hotel_id']);
     }
+    public function getAuthHotels()
+    {
+        return $this->hasMany(AuthHotel::className(), ['users_user_id' => 'id']);
+    }
+
+    public function getPrestamos()
+    {
+        return $this->hasMany(Prestamos::className(), ['users_user_id' => 'id']);
+    }
+    public function getRequests()
+    {
+        return $this->hasMany(Request::className(), ['user_made_id' => 'id']);
+    }
+
+    public function getRequests0()
+    {
+        return $this->hasMany(Request::className(), ['user_acept_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTransferencias()
+    {
+        return $this->hasMany(Transferencias::className(), ['usuarios_usuario_recibe' => 'id']);
+    }
+
+    public function getTransferencias0()
+    {
+        return $this->hasMany(Transferencias::className(), ['usuarios_usuario_id' => 'id']);
+    }
+
 }

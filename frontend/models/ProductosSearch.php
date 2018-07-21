@@ -43,8 +43,12 @@ class ProductosSearch extends Productos
      */
     public function search($params)
     {
-        $query = Productos::find()
-            ->where(['hoteles_hotel_id'=> $_SESSION['current_hotel']]);
+        if ($_SESSION['user_type'] == 'admin'){
+            $query = Productos::find();
+        }else{
+            $query = Productos::find()
+                ->where(['hoteles_hotel_id'=> $_SESSION['current_hotel']]);
+        }
 
         // add conditions that should always apply here
 
@@ -95,11 +99,18 @@ class ProductosSearch extends Productos
         return $activeProducts;
     }
     public function productsAsArray(){
-        $query = Productos::find()
-            ->where(['product_status' => 'active'])
-            ->andWhere(['hoteles_hotel_id' => $_SESSION['current_hotel']])
-            ->asArray()
-            ->all();
+        if ($_SESSION['user_type'] == 'admin'){
+            $query = Productos::find()
+                ->where(['product_status' => 'active'])
+                ->asArray()
+                ->all();
+        }else{
+            $query = Productos::find()
+                ->where(['product_status' => 'active'])
+                ->andWhere(['hoteles_hotel_id' => $_SESSION['current_hotel']])
+                ->asArray()
+                ->all();
+        }
         return $query;
     }
 }

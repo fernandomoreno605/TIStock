@@ -9,7 +9,6 @@ $this->title = 'My Yii Application';
     <div class="jumbotron">
         <h1>Welcome</h1>
         <p class="lead"><?= Yii::t('app','Welcome') ?> </p>
-
     </div>
 
     <div class="body-content">

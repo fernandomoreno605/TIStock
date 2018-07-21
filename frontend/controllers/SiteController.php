@@ -117,6 +117,7 @@ class SiteController extends Controller
             $searchPermissionsModel = new AuthHotelSearch();
             $permissions = $searchPermissionsModel->permissionsList($id);
             //Setting session data
+            $_SESSION['user_type'] = $userData->user_type;
             $_SESSION['user_id'] = $id;
             $_SESSION['current_hotel']= $idHotel;
             $_SESSION['username'] = $userData->username;
