@@ -8,14 +8,13 @@ use yii\helpers\ArrayHelper;
 ?>
 
 <div class="productos-form">
-    form in mode admin
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'hoteles_hotel_id')->dropDownList(
         $hotelProvider,[
-            'prompt'=>'Select Hotel',
+            'prompt'=>Yii::t('app', 'Select Hotel'),
         ]
-    )->label('Hotel') ?>
+    ) ?>
 
     <?= $form->field($model, 'product_name')->textInput(['maxlength' => true]) ?>
 

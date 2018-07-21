@@ -1,10 +1,12 @@
 <?php
 
 namespace frontend\controllers;
+use frontend\models\HotelesSearch;
 use frontend\models\PrestamoArticulos;
 use frontend\models\Productos;
 use frontend\models\ProductosSearch;
 use frontend\models\User;
+use frontend\models\UserSearch;
 use Yii;
 use frontend\models\Prestamos;
 use frontend\models\PrestamosSearch;
@@ -47,10 +49,22 @@ class PrestamosController extends Controller
     {
         $searchModel = new PrestamosSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $searchHotel = new HotelesSearch();
+        $hotelProvider = $searchHotel->listing();
+        $searchUser = new UserSearch();
 
-        return $this->render('index', [
+        $userProvider = $searchUser->listingUsers();
+        if ($_SESSION['user_type'] != 'admin'){
+            return $this->render('common/index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }
+        return $this->render('admin/index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'hotelProvider' => $hotelProvider,
+            'userProvider' => $userProvider,
         ]);
     }
 
@@ -61,14 +75,21 @@ class PrestamosController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         $validation = $this->findModel($id);
-        if ($validation->hoteles_hotel_id != $_SESSION['current_hotel']){
-            return $this->redirect(['index']);
-        }else{
-            return $this->render('view', [
-                'model' => $this->findModel($id),
-                'dataProvider' => $dataProvider,
-            ]);
+        if ($_SESSION['user_type'] != 'admin'){
+            if ($validation->hoteles_hotel_id != $_SESSION['current_hotel']){
+                return $this->redirect(['index']);
+            }else{
+                return $this->render('common/view', [
+                    'model' => $this->findModel($id),
+                    'dataProvider' => $dataProvider,
+                ]);
+            }
         }
+        return $this->render('admin/view', [
+            'model' => $this->findModel($id),
+            'dataProvider' => $dataProvider,
+        ]);
+
     }
 
     public function actionCreate()
@@ -133,14 +154,17 @@ class PrestamosController extends Controller
             }
 
         }
+        if ($_SESSION['user_type'] != 'admin'){
+            return $this->render('common/create', [
+                'model' => $model,
+                'count' => $count,
+                'dataProvider' => $dataProvider,
+                'modelsPrestamosArticulo' => (empty($modelsPrestamosArticulo)) ? [new PrestamoArticulos()] : $modelsPrestamosArticulo,
 
-        return $this->render('create', [
-            'model' => $model,
-            'count' => $count,
-            'dataProvider' => $dataProvider,
-            'modelsPrestamosArticulo' => (empty($modelsPrestamosArticulo)) ? [new PrestamoArticulos()] : $modelsPrestamosArticulo,
-
-        ]);
+            ]);
+        }else{
+            return $this->goBack();
+        }
     }
 
     public function actionUpdate($id)
@@ -176,7 +200,7 @@ class PrestamosController extends Controller
         if ($model->hoteles_hotel_id != $_SESSION['current_hotel'] or $model->prestamo_status == 'delivered'){
             return $this->redirect(['index']);
         }else{
-            return $this->render('update', [
+            return $this->render('common/update', [
                 'model' => $model,
             ]);
         }
@@ -185,14 +209,17 @@ class PrestamosController extends Controller
     public function actionDelete($id)
     {
         $validation = $this->findModel($id);
-        if ($validation->hoteles_hotel_id != $_SESSION['current_hotel']){
-            return $this->redirect(['index']);
-
+        if ($_SESSION['user_type'] != 'admin'){
+            if ($validation->hoteles_hotel_id != $_SESSION['current_hotel']){
+                return $this->redirect(['index']);
+            }else{
+                $this->findModel($id)->delete();
+                return $this->redirect(['index']);
+            }
         }else{
             $this->findModel($id)->delete();
+            return $this->redirect(['index']);
         }
-
-        return $this->redirect(['index']);
     }
 
     protected function findModel($id)

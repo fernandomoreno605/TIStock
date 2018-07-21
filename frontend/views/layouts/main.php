@@ -29,27 +29,44 @@ AppAsset::register($this);
 
 <div class="wrap">
     <?php
-
-        NavBar::begin([
-            'brandLabel' => $_SESSION['current_hotel_name'],
-            'brandUrl' => Yii::$app->homeUrl,
-            'options' => [
-                'class' => 'navbar-inverse navbar-fixed-top',
-            ],
-        ]);
+        if ($_SESSION['user_type'] != 'admin'){
+            NavBar::begin([
+                'brandLabel' => $_SESSION['current_hotel_name'],
+                'brandUrl' => Yii::$app->homeUrl,
+                'options' => [
+                    'class' => 'navbar-inverse navbar-fixed-top',
+                ],
+            ]);
+        }else{
+            NavBar::begin([
+                'brandLabel' => 'System Managment',
+                'brandUrl' => Yii::$app->homeUrl,
+                'options' => [
+                    'class' => 'navbar-inverse navbar-fixed-top',
+                ],
+            ]);
+        }
 
 
         if (!Yii::$app->user->isGuest){
+
             $menuItems = [
                 ['label' => Yii::t('app','Home'), 'url' => ['/site/index']],
             ];
+            if ($_SESSION['user_type'] == 'admin'){
+                $menuItems[] =['label' => Yii::t('app','Hotels')];
+                $menuItems[] =['label' => Yii::t('app','Users')];
+                $menuItems[] =['label' => Yii::t('app','Requests')];
+                $menuItems[] =['label' => Yii::t('app','Transfers')];
+            }else{
+                $menuItems[] = ['label' => Yii::t('app','Transfers'),'url' => ['transferencias/index'],
+                    'items' =>[
+                        ['label'=> Yii::t('app','Received'),'url' => ['transferencias/received']],
+                        ['label'=> Yii::t('app','Made'),'url' => ['transferencias/index']],
+                    ]];
+            }
             $menuItems[] =['label' => Yii::t('app','Products'), 'url' => ['productos/index']];
             $menuItems[]=['label' => Yii::t('app','Loans'),'url' => ['prestamos/index']];
-            $menuItems[] = ['label' => Yii::t('app','Transfers'),'url' => ['transferencias/index'],
-                'items' =>[
-                    ['label'=> Yii::t('app','Received'),'url' => ['transferencias/received']],
-                    ['label'=> Yii::t('app','Made'),'url' => ['transferencias/index']],
-                ]];
             $menuItems[] ='<li class="dropdown">
                           <a class="dropdown-toggle" href="#" data-toggle="dropdown">
                           <img src="icons/idioma.png" alt="Languaje" width="20" height="20" align="middle">

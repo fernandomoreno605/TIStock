@@ -42,9 +42,13 @@ class PrestamosSearch extends Prestamos
      */
     public function search($params)
     {
-        $query = Prestamos::find()
-            ->where(['Prestamos.hoteles_hotel_id' => $_SESSION['current_hotel']])
-            ->joinWith('usersUser');
+        if ($_SESSION['user_type'] != 'admin'){
+            $query = Prestamos::find()
+                ->where(['Prestamos.hoteles_hotel_id' => $_SESSION['current_hotel']])
+                ->joinWith('usersUser');
+        }else{
+            $query = Prestamos::find();
+        }
 
         // add conditions that should always apply here
 
@@ -68,7 +72,7 @@ class PrestamosSearch extends Prestamos
         $query->andFilterWhere([
             'prestamo_id' => $this->prestamo_id,
             'hoteles_hotel_id' => $this->hoteles_hotel_id,
-            //'users_user_id' => $this->users_user_id,
+            'users_user_id' => $this->users_user_id,
             'prestamo_fecha' => $this->prestamo_fecha,
             'prestamo_numero_empleado' => $this->prestamo_numero_empleado,
             'prestamo_fecha_entrega' => $this->prestamo_fecha_entrega,
@@ -76,8 +80,8 @@ class PrestamosSearch extends Prestamos
 
         $query->andFilterWhere(['like', 'prestamo_nombre_empleado', $this->prestamo_nombre_empleado])
             ->andFilterWhere(['like', 'prestamo_status', $this->prestamo_status])
-            ->andFilterWhere(['like', 'prestamo_comentario', $this->prestamo_comentario])
-            ->andFilterWhere(['like', 'user.username', $this->users_user_id]);
+            ->andFilterWhere(['like', 'prestamo_comentario', $this->prestamo_comentario]);
+            //->andFilterWhere(['like', 'user.username', $this->users_user_id]);
 
         return $dataProvider;
     }

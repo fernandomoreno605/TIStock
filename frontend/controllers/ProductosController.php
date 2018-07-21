@@ -9,18 +9,10 @@ use frontend\models\ProductosSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use frontend\models\User;
 use yii\web\UploadedFile;
 
-
-/**
- * ProductosController implements the CRUD actions for Productos model.
- */
 class ProductosController extends Controller
 {
-    /**
-     * {@inheritdoc}
-     */
     public function behaviors()
     {
         return [
@@ -56,9 +48,6 @@ class ProductosController extends Controller
         }else{
             echo '<option>'.Yii::t('app','First Select a Product') .' </option>';
         }
-
-        //echo "<option> - </option>";
-        //return $quantity;
     }
 
     public function actionIndex()
@@ -67,14 +56,17 @@ class ProductosController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $productList = $searchModel->productsAsArray();
 
+        $searchHotel = new HotelesSearch();
+        $hotelProvider = $searchHotel->listing();
         if ($_SESSION['user_type'] == 'admin'){
             return $this->render('admin/index', [
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
                 'productList' => $productList,
+                'hotelProvider' => $hotelProvider,
             ]);
         }else{
-            return $this->render('index', [
+            return $this->render('common/index', [
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
                 'productList' => $productList,
@@ -91,7 +83,7 @@ class ProductosController extends Controller
                 return $this->redirect(['index']);
 
             }else{
-                return $this->render('view', [
+                return $this->render('common/view', [
                     'model' => $this->findModel($id),
                 ]);
             }
@@ -134,7 +126,7 @@ class ProductosController extends Controller
         }
 
         if ($_SESSION['user_type'] != 'admin'){
-            return $this->render('create', [
+            return $this->render('common/create', [
                 'model' => $model,
             ]);
         }
@@ -169,7 +161,7 @@ class ProductosController extends Controller
             if ($model->hoteles_hotel_id != $_SESSION['current_hotel']){
                 return $this->redirect(['index']);
             }else{
-                return $this->render('update', [
+                return $this->render('common/update', [
                     'model' => $model,
                 ]);
             }

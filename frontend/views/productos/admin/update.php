@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model frontend\models\Productos */
 
-$this->title = Yii::t('app','Update').' like a admin : '. $model->product_name;
+$this->title = Yii::t('app','Update').' : '. $model->product_name;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app','Products'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->product_name, 'url' => ['view', 'id' => $model->product_id]];
 $this->params['breadcrumbs'][] = Yii::t('app','Update');

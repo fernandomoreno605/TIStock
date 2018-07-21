@@ -6,7 +6,7 @@ use yii\helpers\Url;
 use kartik\export\ExportMenu;
 
 
-$this->title = Yii::t('app','Products').' view admin';
+$this->title = Yii::t('app','Products');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <h1><?= Html::encode($this->title) ?></h1>
@@ -22,15 +22,36 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['attribute' => 'hoteles_hotel_id',
-                'value' => 'hotelesHotel.hotel_name'
+            [
+                'attribute' => 'hoteles_hotel_id',
+                'value' => 'hotelesHotel.hotel_name',
+                'filterType' => GridView::FILTER_SELECT2,
+                'filter' => $hotelProvider,
+                'filterWidgetOptions' => [
+                    'pluginOptions' => ['allowClear' => true],
+                ],
+                'filterInputOptions' => ['placeholder' => 'Any hotel'],
+                'format' => 'raw'
             ],
             'product_name',
             'product_branch',
             'product_provider',
             //'product_created_date',
             'product_stock',
-            'product_status',
+            [
+                'attribute' => 'product_status',
+                'value' => 'product_status',
+                'filterType' => GridView::FILTER_SELECT2,
+                'filter' => $array = array(
+                    "active" => Yii::t('app', 'Active'),
+                    "inactive" => "inactive",
+                ),
+                'filterWidgetOptions' => [
+                    'pluginOptions' => ['allowClear' => true],
+                ],
+                'filterInputOptions' => ['placeholder' => 'Any status'],
+                'format' => 'raw'
+            ],
             //'product_serial',
             //'product_image',
             ['class' => 'yii\grid\ActionColumn'],

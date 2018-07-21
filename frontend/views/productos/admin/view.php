@@ -2,12 +2,8 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-use kartik\grid\GridView;
 
-/* @var $this yii\web\View */
-/* @var $model frontend\models\Productos */
-
-$this->title = $model->product_name.' admin view';
+$this->title = $model->product_name;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app','Products'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -47,5 +43,4 @@ $this->params['breadcrumbs'][] = $this->title;
             echo '<img src="'.$model->product_image.'" class="user-image" alt="User Image" width="350" height="350" align="middle">';
         ?>
     </div>
-
 </div>

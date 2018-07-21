@@ -2,11 +2,7 @@
 
 use yii\helpers\Html;
 
-
-/* @var $this yii\web\View */
-/* @var $model frontend\models\Productos */
-
-$this->title = Yii::t('app','Create Product').' Admin mode';
+$this->title = Yii::t('app','Create Product');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app','Products'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

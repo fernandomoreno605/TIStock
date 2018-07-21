@@ -24,6 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'hoteles_hotel_id',
                 'value' => 'hotelesHotel.hotel_name',
+
                 'filterType' => GridView::FILTER_SELECT2,
                 'filter' => $hotelProvider,
                 'filterWidgetOptions' => [
