@@ -47,7 +47,7 @@ class Hoteles extends \yii\db\ActiveRecord
     {
         return [
             'hotel_id' => 'ID',
-            'hotel_name' => Yii::t('app','Name'),
+            'hotel_name' => Yii::t('app','Hotel Name'),
             'hotel_address' => Yii::t('app','Address'),
             'hotel_phone' => Yii::t('app','Phone'),
             'hotel_status' => Yii::t('app','Status'),

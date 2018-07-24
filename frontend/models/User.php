@@ -92,6 +92,7 @@ class User extends \yii\db\ActiveRecord
             'updated_at' => Yii::t('app','Updated Date'),
             'user_image' => Yii::t('app','Image'),
             'file'=>Yii::t('app','Image'),
+            'user_type' => Yii::t('app','User Type'),
         ];
     }
 

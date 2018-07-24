@@ -11,7 +11,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
+    <p class="option-buttons">
         <?= Html::a(' <i class="glyphicon glyphicon-open"></i> '.Yii::t('app','Update'), ['update', 'id' => $model->product_id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a(' <i class="glyphicon glyphicon-trash"></i> '.Yii::t('app','Delete'), ['delete', 'id' => $model->product_id], [
             'class' => 'btn btn-danger',
@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]) ?>
     </p>
-    <div class="info">
+    <div class="info-custom">
         <?= DetailView::widget([
             'model' => $model,
             'attributes' => [
@@ -38,9 +38,9 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]) ?>
     </div>
-    <div class="image">
+    <div class="product-image-info">
         <?php
-            echo '<img src="'.$model->product_image.'" class="user-image" alt="User Image" width="350" height="350" align="middle">';
+            echo '<img src="'.$model->product_image.'" class="user-image" alt="User Image" width="300" height="300" align="middle">';
         ?>
     </div>
 </div>

@@ -1,5 +1,4 @@
 <?php
-
 namespace frontend\controllers;
 
 use Yii;
@@ -10,14 +9,10 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use frontend\models\Comments;
 use frontend\models\Hoteles;
-/**
- * RequestController implements the CRUD actions for Request model.
- */
+use frontend\models\HotelesSearch;
+use frontend\models\UserSearch;
 class RequestController extends Controller
 {
-    /**
-     * {@inheritdoc}
-     */
     public function behaviors()
     {
         return [
@@ -42,19 +37,30 @@ class RequestController extends Controller
         ];
     }
 
-    /**
-     * Lists all Request models.
-     * @return mixed
-     */
     public function actionIndex()
     {
         $searchModel = new RequestSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+        $searchHotel = new HotelesSearch();
+        $hotelProvider = $searchHotel->listing();
+
+        $searchUser = new UserSearch();
+        $userProvider = $searchUser->listingUsers();
+
+        if ($_SESSION['user_type'] != 'admin'){
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }else{
+            return $this->render('admin/index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+                'hotelProvider' => $hotelProvider,
+                'userProvider' => $userProvider,
+            ]);
+        }
     }
 
     public function actionView($id)

@@ -141,6 +141,17 @@ h1{
     float:left;
     width:355px;
 }
+.info-custom{
+    position: relative;
+    width: 45%;
+    margin-right: 10px;
+    float: left;
+}
+.product-image-info{
+    position: relative;
+    width: 50%;
+    float: left;
+}
 .img-user
 {
     border-radius: 50%;
@@ -153,8 +164,6 @@ h1{
 }
 .option-buttons{
     text-align: center;
-}
-.pull-right{
 }
 .ofert:hover{
     box-shadow:

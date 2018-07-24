@@ -38,7 +38,7 @@ $this->title = $model->first_name.' '.$model->last_name ;
         ]) ?>
     </div>
 
-    <h3>Permissions to this user:</h3>
+    <h3><?= Yii::t('app','Permissions to this user:')?></h3>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

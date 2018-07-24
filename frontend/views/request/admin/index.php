@@ -4,10 +4,6 @@ use yii\helpers\Html;
 //use yii\grid\GridView;
 use kartik\grid\GridView;
 
-/* @var $this yii\web\View */
-/* @var $searchModel frontend\models\RequestSearch */
-/* @var $dataProvider yii\data\ActiveDataProvider */
-
 $this->title = Yii::t('app', 'Requests');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -20,18 +16,64 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             [
+                'attribute' => 'user_made_id',
+                'value' => 'userMade.username',
+                'filterType' => GridView::FILTER_SELECT2,
+                'filter' => $userProvider,
+                'filterWidgetOptions' => [
+                    'pluginOptions' => ['allowClear' => true],
+                ],
+                'filterInputOptions' => ['placeholder' => Yii::t('app', 'Any User')],
+                'format' => 'raw'
+            ],
+            [
+                'attribute' => 'hotel_made_id',
+                'value' => 'hotelMade.hotel_name',
+                'filterType' => GridView::FILTER_SELECT2,
+                'filter' => $hotelProvider,
+                'filterWidgetOptions' => [
+                    'pluginOptions' => ['allowClear' => true],
+                ],
+                'filterInputOptions' => ['placeholder' => Yii::t('app', 'Any Hotel')],
+                'format' => 'raw'
+
+            ],
+            [
                 'attribute' => 'user_acept_id',
                 'value' => 'userAcept.username',
+                'filterType' => GridView::FILTER_SELECT2,
+                'filter' => $userProvider,
+                'filterWidgetOptions' => [
+                    'pluginOptions' => ['allowClear' => true],
+                ],
+                'filterInputOptions' => ['placeholder' => Yii::t('app', 'Any User')],
+                'format' => 'raw'
             ],
             [
                 'attribute' => 'hotel_acept_id',
                 'value' => 'hotelAcept.hotel_name',
+                'filterType' => GridView::FILTER_SELECT2,
+                'filter' => $hotelProvider,
+                'filterWidgetOptions' => [
+                    'pluginOptions' => ['allowClear' => true],
+                ],
+                'filterInputOptions' => ['placeholder' => Yii::t('app', 'Any Hotel')],
+                'format' => 'raw'
             ],
-            //'request_details',
             [
                 'attribute' => 'request_status',
+                'value' => 'request_status',
+                'filterType' => GridView::FILTER_SELECT2,
+                'filter' => $array = array(
+                    "Accepted" => Yii::t('app', 'Accepted'),
+                    "On hold" => Yii::t('app', 'On Hold'),
+                ),
+                'filterWidgetOptions' => [
+                    'pluginOptions' => ['allowClear' => true],
+                ],
+                'filterInputOptions' => ['placeholder' => Yii::t('app', 'Any Status')],
+                'format' => 'raw'
             ],
-
             ['class' => 'yii\grid\ActionColumn'],
         ],
         'panel' => [
@@ -44,7 +86,5 @@ $this->params['breadcrumbs'][] = $this->title;
         'pjaxSettings'=>[
             'neverTimeout'=>true,
         ],
-
-
     ]); ?>
 </div>

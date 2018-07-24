@@ -232,35 +232,25 @@ class UserController extends Controller
             $model = $this->findModel($id);
             $hotelList = $this->AuthAllowed($id);
 
-            if ($model->load(Yii::$app->request->post())) {
-                $pass = $model->password_hash;
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
-                $model->password_hash = Yii::$app->security->generatePasswordHash($pass);
-
-                if ($model->save()){
-
-                    if(isset($_POST['User']['permissions'])){
-                        $permissionsList = $_POST['User']['permissions'];
-
-                        if ($permissionsList != null) {
-                            AuthHotel::deleteAll(['users_user_id' => $id]);
-                            foreach ($permissionsList as $values) {
-                                $newPermissions = new AuthHotel();
-                                $newPermissions->users_user_id= $model->id;
-                                $newPermissions->hoteles_hotel_id = $values;
-                                $newPermissions->save();
-                            }
+                if(isset($_POST['User']['permissions'])){
+                    $permissionsList = $_POST['User']['permissions'];
+                    if ($permissionsList != null) {
+                        AuthHotel::deleteAll(['users_user_id' => $id]);
+                        foreach ($permissionsList as $values) {
+                            $newPermissions = new AuthHotel();
+                            $newPermissions->users_user_id= $model->id;
+                            $newPermissions->hoteles_hotel_id = $values;
+                            $newPermissions->save();
                         }
                     }
-                }else{
-                    $model->password_hash='';
                 }
                 return $this->redirect(['view', 'id' => $model->id]);
             }
             return $this->render('admin/update', [
                 'model' => $model,
                 'hotelList' => $hotelList,
-
             ]);
         }
     }

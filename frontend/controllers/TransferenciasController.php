@@ -17,6 +17,8 @@ use frontend\models\TransferenciaItems;
 use frontend\models\User;
 use frontend\models\Model;
 use frontend\models\Productos;
+use frontend\models\UserSearch;
+use frontend\models\TransferenciasSearchAdmin;
 
 class TransferenciasController extends Controller
 {
@@ -46,19 +48,32 @@ class TransferenciasController extends Controller
 
     public function actionIndex()
     {
-        $searchModel = new TransferenciasSearch();
+        $searchModel = new TransferenciasSearchAdmin();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        $searchHotel = new HotelesSearch();
+        $hotelProvider = $searchHotel->listing();
+
+        $searchUser = new UserSearch();
+        $userProvider = $searchUser->listingUsers();
+
         if ($_SESSION['user_type'] != 'admin'){
+
+            $searchModel = new TransferenciasSearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
             return $this->render('common/index', [
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
             ]);
+        }else{
+            return $this->render('admin/index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+                'hotelProvider' => $hotelProvider,
+                'userProvider' => $userProvider,
+            ]);
         }
-        return $this->render('admin/index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-
     }
 
     public function actionReceived()

@@ -4,10 +4,6 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 use kartik\grid\GridView;
 
-
-/* @var $this yii\web\View */
-/* @var $model frontend\models\Transferencias */
-
 $this->title = Yii::t('app','To').': '.$hotelName;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app','Transfers'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
@@ -38,7 +34,6 @@ $this->params['breadcrumbs'][] = $this->title;
         }
     ?>
     </p>
-
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [

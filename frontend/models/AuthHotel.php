@@ -45,7 +45,7 @@ class AuthHotel extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'users_user_id' => 'Users User ID',
-            'hoteles_hotel_id' => 'Hoteles Hotel ID',
+            'hoteles_hotel_id' => 'Hotel',
         ];
     }
 

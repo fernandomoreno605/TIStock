@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'neverTimeout'=>true,
         ],
         'panel' => [
-            'heading'=>'<h3 class="panel-title"><i class="glyphicon glyphicon-barcode"></i>'.' '.Yii::t('app','Products').'</h3>',
+            'heading'=>'<h3 class="panel-title"><i class="glyphicon glyphicon-tower"></i>'.' '.Yii::t('app','Hotels').'</h3>',
             'type'=>'default',
             'before'=>Html::a('<i class="glyphicon glyphicon-plus"></i> '.Yii::t('app','Create Hotel'), ['create'], ['class' => 'btn btn-success']),
             'after'=>Html::a('<i class="glyphicon glyphicon-repeat"></i> '.Yii::t('app','Reset'), ['index'], ['class' => 'btn btn-default']),

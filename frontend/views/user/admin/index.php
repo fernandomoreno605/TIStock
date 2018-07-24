@@ -44,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filterWidgetOptions' => [
                     'pluginOptions' => ['allowClear' => true],
                 ],
-                'filterInputOptions' => ['placeholder' => 'Any status'],
+                'filterInputOptions' => ['placeholder' => Yii::t('app', 'Any Type')],
                 'format' => 'raw'
 
             ],
@@ -55,7 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'neverTimeout'=>true,
         ],
         'panel' => [
-            'heading'=>'<h3 class="panel-title"><i class="glyphicon glyphicon-barcode"></i>'.' '.Yii::t('app','Users').'</h3>',
+            'heading'=>'<h3 class="panel-title"><i class="glyphicon glyphicon-user"></i>'.' '.Yii::t('app','Users').'</h3>',
             'type'=>'default',
             'before'=>Html::a('<i class="glyphicon glyphicon-plus"></i> '.Yii::t('app','Create User'), ['create'], ['class' => 'btn btn-success']),
             'after'=>Html::a('<i class="glyphicon glyphicon-repeat"></i> '.Yii::t('app','Reset'), ['index'], ['class' => 'btn btn-default']),

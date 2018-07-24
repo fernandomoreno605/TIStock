@@ -46,18 +46,17 @@ AppAsset::register($this);
                 ],
             ]);
         }
-
-
         if (!Yii::$app->user->isGuest){
 
             $menuItems = [
                 ['label' => Yii::t('app','Home'), 'url' => ['/site/index']],
             ];
+            $menuItems[] =['label' => Yii::t('app','Products'), 'url' => ['productos/index']];
             if ($_SESSION['user_type'] == 'admin'){
-                $menuItems[] =['label' => Yii::t('app','Hotels'),'url' => ['hoteles/index']];
                 $menuItems[] =['label' => Yii::t('app','Users'),'url' => ['user/index']];
-                $menuItems[] =['label' => Yii::t('app','Requests')];
+                $menuItems[] =['label' => Yii::t('app','Hotels'),'url' => ['hoteles/index']];
                 $menuItems[] =['label' => Yii::t('app','Transfers'),'url' => ['transferencias/index']];
+                $menuItems[] =['label' => Yii::t('app','Requests'),'url' => ['request/index']];
             }else{
                 $menuItems[] = ['label' => Yii::t('app','Transfers'),'url' => ['transferencias/index'],
                     'items' =>[
@@ -65,7 +64,6 @@ AppAsset::register($this);
                         ['label'=> Yii::t('app','Made'),'url' => ['transferencias/index']],
                     ]];
             }
-            $menuItems[] =['label' => Yii::t('app','Products'), 'url' => ['productos/index']];
             $menuItems[]=['label' => Yii::t('app','Loans'),'url' => ['prestamos/index']];
             $menuItems[] ='<li class="dropdown">
                           <a class="dropdown-toggle" href="#" data-toggle="dropdown">

@@ -41,8 +41,12 @@ class RequestSearch extends Request
      */
     public function search($params)
     {
-        $query = Request::find()
-            ->where(['hotel_made_id' => $_SESSION['current_hotel']]);
+        if ($_SESSION['user_type'] != 'admin'){
+            $query = Request::find()
+                ->where(['hotel_made_id' => $_SESSION['current_hotel']]);
+        }else{
+            $query = Request::find();
+        }
 
         // add conditions that should always apply here
 

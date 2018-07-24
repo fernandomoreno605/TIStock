@@ -49,11 +49,13 @@ class PrestamosController extends Controller
     {
         $searchModel = new PrestamosSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
         $searchHotel = new HotelesSearch();
         $hotelProvider = $searchHotel->listing();
-        $searchUser = new UserSearch();
 
+        $searchUser = new UserSearch();
         $userProvider = $searchUser->listingUsers();
+
         if ($_SESSION['user_type'] != 'admin'){
             return $this->render('common/index', [
                 'searchModel' => $searchModel,
