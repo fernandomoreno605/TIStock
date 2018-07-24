@@ -93,7 +93,7 @@ AppAsset::register($this);
                        </li>';
             $menuItems[] = '<li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-              <img src="'.$_SESSION['image'].'" class="user-image" alt="User Image" width="25" height="25" align="middle">
+              <img src="'.$_SESSION['image'].'" class="img-circle" alt="User Image" width="25" height="25" align="middle">
               <span class="hidden-xs">'.$_SESSION['username'].'</span><span class="caret"></span>
             </a>
             <ul id="w9" class="dropdown-menu">
@@ -102,8 +102,7 @@ AppAsset::register($this);
                 <img src="'.$_SESSION['image'].'"  class="img-circle" alt="User Image" width="150" height="150" align="middle">
                 <p align="center">
                   '.$_SESSION['name'].'<br/>
-                </p>
-    
+                </p>    
               </li>
               <li class="user-footer">
                 <div class="pull-left">
@@ -133,12 +132,12 @@ AppAsset::register($this);
         NavBar::end();
     ?>
     <div class="container">
-        <div class="">
+        <div class="hotel-permissions" id="hotel-permissions">
             <div class="pull-right">
-            <?php
-                echo $_SESSION['hotel_permissions'];
-            ?>
-        </div>
+                <?php
+                    echo $_SESSION['hotel_permissions'];
+                ?>
+            </div>
         </div>
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],

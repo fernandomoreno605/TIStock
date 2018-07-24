@@ -1,5 +1,6 @@
 <?php
  return[
+     'Address' => 'Dirección',
      'Accept' => 'Aceptar',
      'Active' => 'Activo',
      'Add as a New Product' => 'Añadir como nuevo producto',
@@ -17,6 +18,7 @@
      'Comment Destination' => 'Comentario Destino',
      'Comment Origin' => 'Comentario Origen',
      'Confirm Password' => 'Confirmar Contraseña',
+     'Create Hotel' => 'Crear Hotel',
      'Create Loan' => 'Crear Prestamo',
      'Create Product' => 'Crear Producto',
      'Create Request' => 'Crear Solicitud',
@@ -53,6 +55,7 @@
      'On Loan' => 'En Prestamo',
      'Origin' => 'Origen',
      'Please fill all the fields' => 'Por favor llene todos los campos',
+     'Phone' => 'Telefono',
      'Product' => 'Producto',
      'Product Assignation' => 'Asignacion de Producto',
      'Products' => 'Productos',

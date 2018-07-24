@@ -46,8 +46,8 @@ class Hoteles extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'hotel_id' => 'Hotel ID',
-            'hotel_name' => Yii::t('app','Hotel Name'),
+            'hotel_id' => 'ID',
+            'hotel_name' => Yii::t('app','Name'),
             'hotel_address' => Yii::t('app','Address'),
             'hotel_phone' => Yii::t('app','Phone'),
             'hotel_status' => Yii::t('app','Status'),

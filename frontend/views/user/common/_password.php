@@ -11,6 +11,7 @@ $this->title = Yii::t('app', 'Change Password');
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php
+        echo $model->first_name.' '.$model->last_name;
         if ($alert != null){
             echo $alert;
         }

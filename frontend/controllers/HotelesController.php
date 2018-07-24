@@ -26,6 +26,20 @@ class HotelesController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+            //access to the views
+            'access'=>[
+                'class' => \yii\filters\AccessControl::className(),
+                'only' => ['index','create','update','view','quantity'],
+                'rules' => [
+                    //allow authenticated users
+                    [
+                        'allow' => true,
+                        'roles' => ['@']
+                    ],
+                    //everything else is denied
+                ],
+            ],
+            //end of the access rule
         ];
     }
 

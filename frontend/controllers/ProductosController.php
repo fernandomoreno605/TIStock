@@ -23,6 +23,7 @@ class ProductosController extends Controller
                 ],
 
             ],
+            //access to the views
             'access'=>[
                 'class' => \yii\filters\AccessControl::className(),
                 'only' => ['index','create','update','view','quantity'],
@@ -35,6 +36,7 @@ class ProductosController extends Controller
                     //everything else is denied
                 ],
             ],
+            //end of the access rule
         ];
     }
     public function actionQuantity($id){

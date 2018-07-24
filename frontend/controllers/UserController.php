@@ -13,6 +13,7 @@ use frontend\models\HotelesSearch;
 use frontend\models\AuthHotel;
 use frontend\models\Hoteles;
 use frontend\models\AuthHotelSearch;
+
 class UserController extends Controller
 {
     public function behaviors()
@@ -24,21 +25,41 @@ class UserController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+            //access to the views
+            'access'=>[
+                'class' => \yii\filters\AccessControl::className(),
+                'only' => ['index','create','update','view','quantity'],
+                'rules' => [
+                    //allow authenticated users
+                    [
+                        'allow' => true,
+                        'roles' => ['@']
+                    ],
+                    //everything else is denied
+                ],
+            ],
+            //end of the access rule
         ];
     }
 
     public function actionIndex()
     {
-        $searchModel = new UserSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $searchHotelModel = new HotelesSearch();
-        $hotelProvider = $searchHotelModel->hotelList();
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-            'hotelProvider' => $hotelProvider,
-        ]);
+        if($_SESSION['user_type'] != 'admin'){
+            return $this->goBack();
+        }else{
+            $searchModel = new UserSearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+            $searchHotelModel = new HotelesSearch();
+            $hotelProvider = $searchHotelModel->hotelList();
+
+            return $this->render('admin/index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+                'hotelProvider' => $hotelProvider,
+            ]);
+        }
     }
+
     public function actionCreate()
     {
         $model = new User();
@@ -91,7 +112,7 @@ class UserController extends Controller
         $dataProvider = $seachModel->search(Yii::$app->request->queryParams);
 
         if ($_SESSION['user_type']!='admin'){
-            return $this->render('view', [
+            return $this->render('common/view', [
                 'model' => $this->findModel($_SESSION['user_id']),
                 'alert' => null,
             ]);
@@ -105,40 +126,79 @@ class UserController extends Controller
 
         }
     }
-    public function actionPassword(){
-        $model = $this->findModel($_SESSION['user_id']);
-        //$alert = null;
-        $model->password = null;
 
-        if ($model->load(Yii::$app->request->post())){
-            if ($model->password === $model->confirm_password){
-                if($model->password != null && $model->confirm_password != null){
-                    $model->password_hash = Yii::$app->security->generatePasswordHash($model->password);
-                    $model->save();
-                    return $this->render('view', [
-                        'model' => $this->findModel($_SESSION['user_id']),
-                        'alert' => $this->successful(),
+    public function actionPassword($id){
+        if ($_SESSION['user_type']!= 'admin'){
+            $model = $this->findModel($_SESSION['user_id']);
+            $model->password = null;
+            if ($model->load(Yii::$app->request->post())){
+                if ($model->password === $model->confirm_password){
+                    if($model->password != null && $model->confirm_password != null){
+                        $model->password_hash = Yii::$app->security->generatePasswordHash($model->password);
+                        $model->save();
+                        return $this->render('common/view', [
+                            'model' => $this->findModel($_SESSION['user_id']),
+                            'alert' => $this->successful(),
+                        ]);
+                    }
+                    return $this->render('common/_password',[
+                        'model' => $model,
+                        'alert' => $this->voidFields(),
                     ]);
                 }
+                else{
+                    $model->password = null;
+                    $model->confirm_password = null;
+                    return $this->render('common/_password',[
+                        'model' => $model,
+                        'alert' => $this->error(),
+                    ]);
+                }
+            }
+            return $this->render('common/_password',[
+                'model' => $model,
+                'alert' => null,
+            ]);
+        }else{
 
-                return $this->render('_password',[
-                    'model' => $model,
-                    'alert' => $this->voidFields(),
-                ]);
+            $model = $this->findModel($id);
+            $model->password = null;
+
+            if ($model->load(Yii::$app->request->post())){
+                if ($model->password === $model->confirm_password){
+                    if($model->password != null && $model->confirm_password != null){
+                        $model->password_hash = Yii::$app->security->generatePasswordHash($model->password);
+                        $model->save();
+
+                        $seachModel = new AuthHotelSearch();
+                        $seachModel->users_user_id = $id;
+                        $dataProvider = $seachModel->search(Yii::$app->request->queryParams);
+
+                        return $this->render('admin/view', [
+                            'model' => $this->findModel($id),
+                            'dataProvider' => $dataProvider,
+                            'alert' => $this->successful(),
+                        ]);
+                    }
+                    return $this->render('admin/_password',[
+                        'model' => $model,
+                        'alert' => $this->voidFields(),
+                    ]);
+                }
+                else{
+                    $model->password = null;
+                    $model->confirm_password = null;
+                    return $this->render('admin/_password',[
+                        'model' => $model,
+                        'alert' => $this->error(),
+                    ]);
+                }
             }
-            else{
-                $model->password = null;
-                $model->confirm_password = null;
-                return $this->render('_password',[
-                    'model' => $model,
-                    'alert' => $this->error(),
-                ]);
-            }
+            return $this->render('admin/_password',[
+                'model' => $model,
+                'alert' => null,
+            ]);
         }
-        return $this->render('_password',[
-            'model' => $model,
-            'alert' => null,
-        ]);
     }
 
     public function actionUpdate($id)
@@ -158,14 +218,14 @@ class UserController extends Controller
                     $_SESSION['username'] = $model->username;
                     $_SESSION['name'] = $model->first_name.' '.$model->last_name;
                     $_SESSION['image'] = $model->user_image;
-                    return $this->render('view',[
+                    return $this->render('common/view',[
                         'model' => $this->findModel($_SESSION['user_id']),
                         'alert' => $this->successful(),
                     ]);
                 }
             }
 
-            return $this->render('update', [
+            return $this->render('common/update', [
                 'model' => $model,
             ]);
         }else{
@@ -195,18 +255,16 @@ class UserController extends Controller
                 }else{
                     $model->password_hash='';
                 }
-
                 return $this->redirect(['view', 'id' => $model->id]);
             }
-
             return $this->render('admin/update', [
                 'model' => $model,
                 'hotelList' => $hotelList,
 
             ]);
-
         }
     }
+
     public function successful(){
         $alert = '<div class="alert alert-success alert-dismissable" role="alert">
                     '.Yii::t('app', 'Update Successful').'
@@ -216,6 +274,7 @@ class UserController extends Controller
                 </div>';
         return $alert;
     }
+
     public function error(){
         $alert = '<div class="alert alert-danger alert-dismissable" role="alert">
                     '.Yii::t('app', 'The password doesn\'t match').'
@@ -225,6 +284,7 @@ class UserController extends Controller
                 </div>';
         return $alert;
     }
+
     public function voidFields(){
         $alert = '<div class="alert alert-danger alert-dismissable" role="alert">
                     '.Yii::t('app', 'Please fill all the fields').'
@@ -243,6 +303,7 @@ class UserController extends Controller
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
+
     public function AuthItems(){
         $list='<div id="user-permissions">
         <label class="control-label" >User Permissions</label>
@@ -257,6 +318,7 @@ class UserController extends Controller
         $list=$list.'</div>';
         return $list;
     }
+
     public function AuthAllowed($id){
         $list='<div id="user-permissions">
         <label class="control-label" >User Permissions</label>
@@ -285,5 +347,4 @@ class UserController extends Controller
         $list=$list.'</div>';
         return $list;
     }
-
 }
