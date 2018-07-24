@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 19-07-2018 a las 17:59:34
+-- Tiempo de generación: 25-07-2018 a las 00:25:10
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -39,13 +39,16 @@ CREATE TABLE `auth_hotel` (
 INSERT INTO `auth_hotel` (`id`, `users_user_id`, `hoteles_hotel_id`) VALUES
 (17, 4, 1),
 (18, 4, 2),
-(19, 6, 3),
-(20, 6, 4),
 (21, 7, 4),
 (22, 7, 5),
 (23, 8, 4),
 (24, 8, 5),
-(25, 5, 2);
+(25, 5, 2),
+(38, 10, 1),
+(39, 10, 2),
+(40, 10, 3),
+(41, 6, 3),
+(42, 6, 4);
 
 -- --------------------------------------------------------
 
@@ -69,21 +72,22 @@ CREATE TABLE `comments` (
 
 INSERT INTO `comments` (`id_comment`, `hoteles_hotel_id`, `coment_subjet`, `comment_text`, `comment_status`, `timestamp`, `url`) VALUES
 (22, 5, 'Transfers', 'You received a new transfer', 1, '2018-07-18 17:14:39', 'index.php?r=transferencias%2Fview&id=23'),
-(23, 1, 'Transfer Request', 'The hotel: Beach Palace requires a transfer', 0, '2018-07-18 23:38:37', 'index.php?r=request/view&id=15'),
+(23, 1, 'Transfer Request', 'The hotel: Beach Palace requires a transfer', 1, '2018-07-18 23:38:37', 'index.php?r=request/view&id=15'),
 (24, 2, 'Transfer Request', 'The hotel: Beach Palace requires a transfer', 0, '2018-07-18 23:38:37', 'index.php?r=request/view&id=15'),
 (26, 5, 'Transfer Request', 'The hotel: Beach Palace requires a transfer', 1, '2018-07-18 23:38:37', 'index.php?r=request/view&id=15'),
 (27, 3, 'Request accept', 'Your Transfer Request was accepted by: Le Blanc Spa Resorts', 1, '2018-07-18 23:55:41', 'index.php?r=request/view&id=15'),
-(28, 1, 'Transfer Request', 'The hotel: Le Blanc Spa Resorts requires a transfer', 0, '2018-07-19 00:00:49', 'index.php?r=request/view&id=16'),
+(28, 1, 'Transfer Request', 'The hotel: Le Blanc Spa Resorts requires a transfer', 1, '2018-07-19 00:00:49', 'index.php?r=request/view&id=16'),
 (29, 2, 'Transfer Request', 'The hotel: Le Blanc Spa Resorts requires a transfer', 0, '2018-07-19 00:00:49', 'index.php?r=request/view&id=16'),
 (30, 3, 'Transfer Request', 'The hotel: Le Blanc Spa Resorts requires a transfer', 1, '2018-07-19 00:00:49', 'index.php?r=request/view&id=16'),
 (31, 4, 'Transfer Request', 'The hotel: Le Blanc Spa Resorts requires a transfer', 1, '2018-07-19 00:00:49', 'index.php?r=request/view&id=16'),
 (32, 4, 'Transfers', 'You received a new transfer', 1, '2018-07-19 16:04:29', 'index.php?r=transferencias%2Fview&id=24'),
 (33, 3, 'Transfers', 'Transfer delivered', 1, '2018-07-19 16:06:49', 'index.php?r=transferencias/view&id=24'),
-(34, 1, 'Transfer Request', 'The hotel: Beach Palace requires a transfer', 0, '2018-07-19 16:08:45', 'index.php?r=request/view&id=17'),
+(34, 1, 'Transfer Request', 'The hotel: Beach Palace requires a transfer', 1, '2018-07-19 16:08:45', 'index.php?r=request/view&id=17'),
 (35, 2, 'Transfer Request', 'The hotel: Beach Palace requires a transfer', 0, '2018-07-19 16:08:45', 'index.php?r=request/view&id=17'),
 (36, 4, 'Transfer Request', 'The hotel: Beach Palace requires a transfer', 1, '2018-07-19 16:08:45', 'index.php?r=request/view&id=17'),
 (37, 5, 'Transfer Request', 'The hotel: Beach Palace requires a transfer', 0, '2018-07-19 16:08:45', 'index.php?r=request/view&id=17'),
-(38, 3, 'Request accept', 'Your Transfer Request was accepted by: Sun Palace', 1, '2018-07-19 16:09:12', 'index.php?r=request/view&id=17');
+(38, 3, 'Request accept', 'Your Transfer Request was accepted by: Sun Palace', 1, '2018-07-19 16:09:12', 'index.php?r=request/view&id=17'),
+(39, 2, 'Transfers', 'Transfer delivered', 0, '2018-07-21 20:23:52', 'index.php?r=transferencias/view&id=19');
 
 -- --------------------------------------------------------
 
@@ -192,10 +196,7 @@ CREATE TABLE `prestamos` (
 --
 
 INSERT INTO `prestamos` (`prestamo_id`, `hoteles_hotel_id`, `users_user_id`, `prestamo_fecha`, `prestamo_numero_empleado`, `prestamo_nombre_empleado`, `prestamo_fecha_entrega`, `prestamo_status`, `prestamo_comentario`) VALUES
-(7, 2, 5, '2018-07-07', 123, 'Julian Javier Solis Herrera', '2018-07-07', 'on loan', 'The Collaborator Julian needs one wifi adaptor for his computer because don\'t have bluetooth.\r\nThe adapter was delivered in the same day and it\'s ok'),
-(10, 4, 6, '2018-07-14', 666, 'Test user', NULL, 'delivered', 'need some items for his work'),
-(12, 3, 6, '2018-07-17', 1, 'Fernando', '2018-07-17', 'delivered', 'testing save changes'),
-(13, 3, 6, '2018-07-18', 1, '1', '2018-07-18', 'delivered', '1');
+(7, 2, 5, '2018-07-07', 123, 'Julian Javier Solis Herrera', '2018-07-07', 'on loan', 'The Collaborator Julian needs one wifi adaptor for his computer because don\'t have bluetooth.\r\nThe adapter was delivered in the same day and it\'s ok');
 
 -- --------------------------------------------------------
 
@@ -215,14 +216,7 @@ CREATE TABLE `prestamo_articulos` (
 --
 
 INSERT INTO `prestamo_articulos` (`id`, `prestamos_prestamo_id`, `productos_product_id`, `producto_cantidad`) VALUES
-(4, 7, 5, 1),
-(7, 10, 10, 1),
-(9, 12, 7, 1),
-(10, 12, 8, 1),
-(11, 12, 9, 1),
-(12, 12, 19, 1),
-(13, 12, 20, 1),
-(14, 13, 7, 1);
+(4, 7, 5, 1);
 
 -- --------------------------------------------------------
 
@@ -254,19 +248,16 @@ INSERT INTO `productos` (`product_id`, `hoteles_hotel_id`, `product_name`, `prod
 (4, 2, 'Cable HDMI', 'product/not_available.png', 'Steren', 'Solulogic', NULL, '2018-07-07', 1, 'active'),
 (5, 2, 'Bluetooth USB adapter', 'product/not_available.png', 'Stere', 'Solulogic', NULL, '2018-07-07', 3, 'active'),
 (6, 2, 'Speakers  alambric', 'product/not_available.png', 'Logitech', 'Solulogic', NULL, '2018-07-07', 3, 'active'),
-(7, 3, 'Bluetooth USB adapter', 'product/bluetooth.jpg', 'Logitech', 'Solulogic', 'MPLF010897HTCRS001', '2018-07-07', 0, 'inactive'),
-(8, 3, 'USB Wifi Adapter', 'product/wifi.jpg', 'TP Link', 'Solulogic', NULL, '2018-07-07', 1, 'active'),
-(9, 3, 'Speakers  alambric', 'product/bocinas.jpg', 'Steren', 'Solulogic', NULL, '2018-07-07', 0, 'inactive'),
 (10, 4, 'UTP cable 2 metters', 'product/UTP cable 2 metters4.png', 'Steren', 'Solulogic', '', '2018-07-07', 2, 'active'),
 (11, 4, 'Bluetooth USB Card', 'product/Bluetooth USB Card4.jpg', 'Logitech', 'Solulogic', '', '2018-07-07', 5, 'active'),
 (12, 4, 'USB Wifi Card', 'product/not_available.png', 'TP Link', 'Solulogic', '', '2018-07-07', 0, 'inactive'),
 (13, 5, 'Bluetooth USB adapter', 'product/not_available.png', 'Logitech', 'Solulogic', '', '2018-07-07', 5, 'active'),
 (14, 5, 'RJ45 Connectors ', 'product/not_available.png', 'Steren', 'Solulogic', NULL, '2018-07-07', 400, 'active'),
 (18, 4, 'Cable HDMI', 'product/not_available.png', 'Steren', 'Solulogic', NULL, '2018-07-10', 1, 'active'),
-(19, 3, 'cable hdmi', 'product/hdmi.jpg', 'steren', 'IT Cancun', '', '2018-07-10', 1, 'active'),
-(20, 3, 'Blackout', 'product/Blackout3.jpg', 'Scorpions', 'Sony Music', '', '2018-07-13', 1, 'active'),
-(21, 3, 'testing by backed', 'product/not_available.png', 'backend', 'backend', 'backendserial', '2018-07-18', 5, 'active'),
-(22, 4, 'Speakers  alambric', 'product/not_available.png', 'Steren', 'Solulogic', NULL, '2018-07-19', 1, 'active');
+(20, 3, 'Blackout Album', 'product/Blackout3.jpg', 'Scorpions', 'Sony Music', '', '2018-07-13', 3, 'active'),
+(22, 4, 'Speakers  alambric', 'product/not_available.png', 'Steren', 'Solulogic', NULL, '2018-07-19', 1, 'active'),
+(24, 3, 'Order to thrash', 'product/Order to thrash3.jpg', 'Violator', 'Independient', '', '2018-07-21', 5, 'active'),
+(27, 3, 'Cable HDMI', 'product/not_available.png', 'Steren', 'Solulogic', NULL, '2018-07-21', 1, 'active');
 
 -- --------------------------------------------------------
 
@@ -345,11 +336,7 @@ CREATE TABLE `transferencias` (
 --
 
 INSERT INTO `transferencias` (`transferencia_id`, `usuarios_usuario_id`, `hoteles_hotel_id`, `transferencia_destino_id`, `usuarios_usuario_recibe`, `transferencia_status`, `transferencia_comentario_origen`, `transferencia_comentario_destino`) VALUES
-(19, 5, 2, 3, 6, 'delivered', 'testing in back', 'transfer received correctly'),
-(20, 5, 2, 4, 6, 'delivered', 'testeo de backend', 'test'),
-(22, 6, 3, 5, 8, 'delivered', 'testing', 'the products arrived correctly'),
-(23, 6, 3, 5, NULL, 'to deliver', 'comment', NULL),
-(24, 6, 3, 4, 6, 'delivered', 'test', '');
+(20, 5, 2, 4, 6, 'delivered', 'testeo de backend', 'test');
 
 -- --------------------------------------------------------
 
@@ -370,16 +357,7 @@ CREATE TABLE `transferencia_items` (
 --
 
 INSERT INTO `transferencia_items` (`id`, `transferencias_transferencia_id`, `productos_producto_id`, `cantidad`, `item_status`) VALUES
-(4, 19, 4, 1, '1'),
-(5, 20, 4, 1, '0'),
-(7, 22, 7, 5, '0'),
-(8, 22, 8, 8, '0'),
-(9, 22, 9, 5, '0'),
-(10, 22, 19, 7, '0'),
-(11, 22, 20, 5, '0'),
-(12, 23, 7, 1, '0'),
-(13, 24, 7, 1, '1'),
-(14, 24, 9, 1, '1');
+(5, 20, 4, 1, '0');
 
 -- --------------------------------------------------------
 
@@ -410,13 +388,14 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `username`, `first_name`, `last_name`, `colaborator_no`, `hoteles_hotel_id`, `auth_key`, `password_hash`, `password_reset_token`, `email`, `status`, `created_at`, `updated_at`, `user_type`, `user_image`) VALUES
-(2, 'admin', 'Fernando', 'Moreno', 1, 1, 'qgXDr_9BLxFr2PbIlMQhICX9S3uXOlZZ', '$2y$13$hi2nqhJbJtlh1AZnjxZLIu4zsnEouiekt15PRoCZxMiw3DmEpRzaS', NULL, 'fernandomoreno605@gmail.com', 10, 0, 0, 'admin', 'user/user.png'),
-(4, 'user1', 'fernando', 'moreno', 2, 1, 'Y2SbUUnMPOqH9JFQyOQafcZUhmWVVtgT', '$2y$13$Q6.tyl4VEReFvrbFtHw2.eEkrOWHJpQVHaBJAvcevh3W3FtoNGZj.', NULL, 'mail@mail.com', 10, 1527959393, 1527959393, 'common', 'user/user.png'),
-(5, 'user2', 'Jose', 'Perez', 3, 2, 'Gx2Fi5YgGT67q_kxS6gvGqXZo5euKzKg', '$2y$13$cXRnP4J1yP3Pck4dEGPZYug4KwejNlXgjV01pB.TH1enu3QRWDwya', NULL, 'usuario2@mail.com', 10, 1528127156, 1528127156, 'common', 'user/user.png'),
-(6, 'user3', 'Alejandro', 'Figueroa', 5, 3, 'BbXAmoHCL9K6uX3Z6kCl_WX96qP0rgui', '$2y$13$9q0EDHNPBCMxAW8VcAwFquX.4Wia8TXvfJUyrM4X/Zscx3M.fH6GS', '', 'user3@mail.com', 10, 0, 0, 'common', 'user/fernandomoreno605.jpg'),
-(7, 'user4', 'Francisco', 'Perez', 5, 4, 'tvNcJnRTYxxInOQ7YqfJg3CiIldwCL7p', '$2y$13$cZZuyX3yqJ1aML3YAM0.f.0KXXXKTC2w/V8SjLqdfMO7lhaWLbR7u', NULL, 'user4@mail.com', 10, 0, 0, 'common', 'user/user.png'),
-(8, 'user5', 'Manuel', 'Gutierrez', 5, 5, 'FTlYNCoF2De87C4uV1ENl6zQbyTwO31Z', '$2y$13$hstWDD/FowqtjdB/SmAbFOYQNsl1xdyZyhbJdSgF1VJB8bZDGLm0S', NULL, 'user5@mail.com', 10, 0, 0, 'common', 'user/user.png'),
-(9, 'user6', 'fernando', 'backend', 1, 5, 'k17_htC7bN6lKBU1tYb_d7MF_-WJCUY6', '$2y$13$OsY0v6PX8SSP3m3lRMfh6ebZb9ZjSNygLQJ6EpgqJ63QIv5v8eoVi', NULL, 'user6@mail.com', 10, 0, 0, 'common', 'user/user.png');
+(2, 'admin', 'Fernando', 'Moreno', 1, 1, 'qgXDr_9BLxFr2PbIlMQhICX9S3uXOlZZ', '$2y$13$gM8clAjH0CD4lYxX20r62Okctl.D6qn7hAZlKL35/Ua8Io/ep2SGC', NULL, 'fernandomoreno605@gmail.com', 10, 0, 0, 'admin', 'user/adminT.gif'),
+(4, 'user1', 'fernando', 'moreno', 2, 1, 'Y2SbUUnMPOqH9JFQyOQafcZUhmWVVtgT', '$2y$13$gM8clAjH0CD4lYxX20r62Okctl.D6qn7hAZlKL35/Ua8Io/ep2SGC', NULL, 'mail@mail.com', 10, 1527959393, 1527959393, 'common', 'user/user.png'),
+(5, 'user2', 'Jose', 'Perez', 3, 2, 'Gx2Fi5YgGT67q_kxS6gvGqXZo5euKzKg', '$2y$13$gM8clAjH0CD4lYxX20r62Okctl.D6qn7hAZlKL35/Ua8Io/ep2SGC', NULL, 'usuario2@mail.com', 10, 1528127156, 1528127156, 'common', 'user/user.png'),
+(6, 'user3', 'Test', 'Alabarda', 5, 3, 'BbXAmoHCL9K6uX3Z6kCl_WX96qP0rgui', '$2y$13$gM8clAjH0CD4lYxX20r62Okctl.D6qn7hAZlKL35/Ua8Io/ep2SGC', '', 'user3@mail.com', 10, 0, 0, 'common', 'user/fernandomoreno605.jpg'),
+(7, 'user4', 'Francisco', 'Perez', 5, 4, 'tvNcJnRTYxxInOQ7YqfJg3CiIldwCL7p', '$2y$13$gM8clAjH0CD4lYxX20r62Okctl.D6qn7hAZlKL35/Ua8Io/ep2SGC', NULL, 'user4@mail.com', 10, 0, 0, 'common', 'user/user.png'),
+(8, 'user5', 'Manuel', 'Gutierrez', 5, 5, 'FTlYNCoF2De87C4uV1ENl6zQbyTwO31Z', '$2y$13$gM8clAjH0CD4lYxX20r62Okctl.D6qn7hAZlKL35/Ua8Io/ep2SGC', NULL, 'user5@mail.com', 10, 0, 0, 'common', 'user/user.png'),
+(9, 'user6', 'fernando', 'backend', 1, 5, 'k17_htC7bN6lKBU1tYb_d7MF_-WJCUY6', '$2y$13$gM8clAjH0CD4lYxX20r62Okctl.D6qn7hAZlKL35/Ua8Io/ep2SGC', NULL, 'user6@mail.com', 10, 0, 0, 'common', 'user/user.png'),
+(10, 'test', 'Test', 'update', 99, 1, 'T7gZn1HLiS4-ukJJQwlJzBfI8QtfWcRc', '$2y$13$gM8clAjH0CD4lYxX20r62Okctl.D6qn7hAZlKL35/Ua8Io/ep2SGC', NULL, 'updatetest@test.com', 10, 0, 0, 'admin', 'user/user.png');
 
 --
 -- Índices para tablas volcadas
@@ -540,12 +519,12 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT de la tabla `auth_hotel`
 --
 ALTER TABLE `auth_hotel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 --
 -- AUTO_INCREMENT de la tabla `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id_comment` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id_comment` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 --
 -- AUTO_INCREMENT de la tabla `hoteles`
 --
@@ -565,17 +544,17 @@ ALTER TABLE `po_item`
 -- AUTO_INCREMENT de la tabla `prestamos`
 --
 ALTER TABLE `prestamos`
-  MODIFY `prestamo_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `prestamo_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT de la tabla `prestamo_articulos`
 --
 ALTER TABLE `prestamo_articulos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 --
 -- AUTO_INCREMENT de la tabla `rentas`
 --
@@ -590,17 +569,17 @@ ALTER TABLE `request`
 -- AUTO_INCREMENT de la tabla `transferencias`
 --
 ALTER TABLE `transferencias`
-  MODIFY `transferencia_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `transferencia_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 --
 -- AUTO_INCREMENT de la tabla `transferencia_items`
 --
 ALTER TABLE `transferencia_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT de la tabla `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- Restricciones para tablas volcadas
 --

@@ -5,9 +5,6 @@
 
 use frontend\assets\HomeAsset;
 use yii\helpers\Html;
-use yii\bootstrap\Nav;
-use yii\bootstrap\NavBar;
-use yii\widgets\Breadcrumbs;
 use common\widgets\Alert;
 
 HomeAsset::register($this);
@@ -24,7 +21,7 @@ HomeAsset::register($this);
     <?php $this->head() ?>
     <style type="text/css">
         body {
-            background: url('../assets/img/background.jpg') no-repeat center;
+            background: url('../assets/img/fondo.jpg') no-repeat center;
         }
     </style>
 
