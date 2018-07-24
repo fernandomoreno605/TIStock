@@ -41,8 +41,12 @@ class TransferenciasSearch extends Transferencias
      */
     public function search($params)
     {
-        $query = Transferencias::find()
-        ->where(['transferencias.hoteles_hotel_id' => $_SESSION['current_hotel']]);
+        if ($_SESSION['user_type'] != 'admin'){
+            $query = Transferencias::find()
+                ->where(['transferencias.hoteles_hotel_id' => $_SESSION['current_hotel']]);
+        }else{
+            $query = Transferencias::find();
+        }
 
         // add conditions that should always apply here
 

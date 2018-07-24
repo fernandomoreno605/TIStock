@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use kartik\grid\GridView;
 use frontend\models\TransferenciaItemsSearch;
 
-$this->title = Yii::t('app','Transfers Made');
+$this->title = Yii::t('app','Transfers');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="transferencias-index">
@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     $searchModel ->transferencias_transferencia_id = $model->transferencia_id;
                     $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-                    return Yii::$app->controller->renderPartial('_transferenciaitems',[
+                    return Yii::$app->controller->renderPartial('admin/_transferenciaitems',[
                         'searchModel' => $searchModel,
                         'dataProvider' => $dataProvider,
                     ]);
@@ -59,7 +59,6 @@ $this->params['breadcrumbs'][] = $this->title;
         'panel' => [
             'heading'=>'<h3 class="panel-title"><i class="glyphicon glyphicon-export"></i>'.' '.Yii::t('app','Transfers').'</h3>',
             'type'=>'default',
-            'before'=>Html::a('<i class="glyphicon glyphicon-plus"></i> '.Yii::t('app','Create Transfer'), ['create'], ['class' => 'btn btn-success']),
             'after'=>Html::a('<i class="glyphicon glyphicon-repeat"></i> '.Yii::t('app','Reset'), ['index'], ['class' => 'btn btn-default']),
         ],
 

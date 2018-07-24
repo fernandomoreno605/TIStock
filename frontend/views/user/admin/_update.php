@@ -30,8 +30,6 @@ $hotels_list = ArrayHelper::map($query, 'hotel_id','hotel_name');
 
     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'password_hash')->passwordInput(['maxlength' => true]) ?>
-
     <?= $form->field($model, 'user_type')->dropDownList([ 'admin' => 'Admin','common' => 'Common' ], ['prompt' => 'Choose a type of user']) ?>
 
     <?php  //$form->field($model,'permissions')->checkboxList($hotelList)  ?>

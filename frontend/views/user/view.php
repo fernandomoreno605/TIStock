@@ -17,7 +17,7 @@ $this->title = $model->first_name.' '.$model->last_name ;
     } ?>
 
     <p>
-        <?= Html::a(' <i class="glyphicon glyphicon-open"></i> '.Yii::t('app', 'Update'), ['update'], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(' <i class="glyphicon glyphicon-open"></i> '.Yii::t('app', 'Update'), ['update', 'id' => $_SESSION['user_id']], ['class' => 'btn btn-primary']) ?>
         <?= Html::a(' <i class="glyphicon glyphicon-asterisk"></i> '.Yii::t('app', 'Change Password'), ['password'], ['class' => 'btn btn-primary']) ?>
     </p>
     <div class="info">

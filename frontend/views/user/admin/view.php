@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-
+use kartik\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $model frontend\models\User */
 
@@ -15,9 +15,14 @@ $this->title = $model->first_name.' '.$model->last_name ;
     <?php if ($alert != null){
         echo $alert;
     } ?>
+    <div class="image">
+        <?php
+        echo '<img src="'.$model->user_image.'" class="user-imagen" alt="User Image" width="350" height="350" align="middle">';
+        ?>
+    </div>
 
     <p>
-        <?= Html::a(' <i class="glyphicon glyphicon-open"></i> '.Yii::t('app', 'Update'), ['update'], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(' <i class="glyphicon glyphicon-open"></i> '.Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a(' <i class="glyphicon glyphicon-asterisk"></i> '.Yii::t('app', 'Change Password'), ['password'], ['class' => 'btn btn-primary']) ?>
     </p>
     <div class="info">
@@ -33,11 +38,21 @@ $this->title = $model->first_name.' '.$model->last_name ;
             ],
         ]) ?>
     </div>
-    <div class="image">
-        <?php
-            echo '<img src="'.$model->user_image.'" class="user-imagen" alt="User Image" width="350" height="350" align="middle">';
-        ?>
-    </div>
 
+    <h3>Permissions to this user:</h3>
+
+    <?= GridView::widget([
+        'dataProvider' => $dataProvider,
+        'columns' => [
+            ['attribute' => 'hoteles_hotel_id',
+                'value' => 'hotelesHotel.hotel_name',
+            ],
+            /*
+                        ['attribute' => 'users_user_id',
+                            'value' => 'usersUser.username'
+                        ],
+            */
+        ],
+    ]); ?>
 
 </div>

@@ -39,7 +39,7 @@ AppAsset::register($this);
             ]);
         }else{
             NavBar::begin([
-                'brandLabel' => 'System Managment',
+                'brandLabel' => '<img src="icons/logo-palace.png" alt="Logo" align="middle">',
                 'brandUrl' => Yii::$app->homeUrl,
                 'options' => [
                     'class' => 'navbar-inverse navbar-fixed-top',
@@ -54,10 +54,10 @@ AppAsset::register($this);
                 ['label' => Yii::t('app','Home'), 'url' => ['/site/index']],
             ];
             if ($_SESSION['user_type'] == 'admin'){
-                $menuItems[] =['label' => Yii::t('app','Hotels')];
-                $menuItems[] =['label' => Yii::t('app','Users')];
+                $menuItems[] =['label' => Yii::t('app','Hotels'),'url' => ['hoteles/index']];
+                $menuItems[] =['label' => Yii::t('app','Users'),'url' => ['user/index']];
                 $menuItems[] =['label' => Yii::t('app','Requests')];
-                $menuItems[] =['label' => Yii::t('app','Transfers')];
+                $menuItems[] =['label' => Yii::t('app','Transfers'),'url' => ['transferencias/index']];
             }else{
                 $menuItems[] = ['label' => Yii::t('app','Transfers'),'url' => ['transferencias/index'],
                     'items' =>[
@@ -107,7 +107,7 @@ AppAsset::register($this);
               </li>
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="index.php?r=user/view" class="btn btn-default btn-flat">'.Yii::t('app','Profile').'</a>
+                  <a href="index.php?r=user/view&id='.$_SESSION['user_id'].'" class="btn btn-default btn-flat">'.Yii::t('app','Profile').'</a>
                 </div>
                 <div class="pull-right">'
                 .Html::beginForm(['/site/logout'], 'post')

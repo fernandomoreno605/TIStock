@@ -70,6 +70,13 @@ class HotelesSearch extends Hoteles
 
         return $dataProvider;
     }
+    public function hotelList(){
+        $query = Hoteles::find()
+            ->asArray()
+            ->all();
+        $list = ArrayHelper::map($query,'hotel_id','hotel_name');
+        return $list;
+    }
 
     public function listing(){
         $getHotels = Hoteles::find()

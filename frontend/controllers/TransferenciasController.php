@@ -48,11 +48,17 @@ class TransferenciasController extends Controller
     {
         $searchModel = new TransferenciasSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('common/index', [
+        if ($_SESSION['user_type'] != 'admin'){
+            return $this->render('common/index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }
+        return $this->render('admin/index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
+
     }
 
     public function actionReceived()
@@ -81,18 +87,27 @@ class TransferenciasController extends Controller
         $hotelName = $searchHotel->getHotelName($idHotel);
 
         $validation = $this->findModel($id);
-
-        if ($validation->hoteles_hotel_id == $_SESSION['current_hotel'] || $validation->transferencia_destino_id == $_SESSION['current_hotel']){
-            return $this->render('common/view', [
-                'model' => $this->findModel($id),
-                'dataProvider' => $dataProvider,
-                'hotelName' => $hotelName,
-                'idHotelDestination' => $idHotel,
-                'idHotelOrigin' => $idHotelOrigin,
-            ]);
-        }else{
-            return $this->redirect(['index']);
+        if ($_SESSION['user_type'] != 'admin'){
+            if ($validation->hoteles_hotel_id == $_SESSION['current_hotel'] || $validation->transferencia_destino_id == $_SESSION['current_hotel']){
+                return $this->render('common/view', [
+                    'model' => $this->findModel($id),
+                    'dataProvider' => $dataProvider,
+                    'hotelName' => $hotelName,
+                    'idHotelDestination' => $idHotel,
+                    'idHotelOrigin' => $idHotelOrigin,
+                ]);
+            }else{
+                return $this->redirect(['index']);
+            }
         }
+        return $this->render('admin/view', [
+            'model' => $this->findModel($id),
+            'dataProvider' => $dataProvider,
+            'hotelName' => $hotelName,
+            'idHotelDestination' => $idHotel,
+            'idHotelOrigin' => $idHotelOrigin,
+        ]);
+
     }
 
     public function actionCreate()
@@ -168,14 +183,17 @@ class TransferenciasController extends Controller
             }
 
         }
-
-        return $this->render('common/create', [
-            'model' => $model,
-            'hotelsProvider' => $hotelsProvider,
-            'count' => $count,
-            'dataProvider' => $dataProvider,
-            'modelsTransItems' => (empty($modelsTransItems)) ? [new TransferenciaItems] : $modelsTransItems,
-        ]);
+        if ($_SESSION['user_type'] != 'admin'){
+            return $this->render('common/create', [
+                'model' => $model,
+                'hotelsProvider' => $hotelsProvider,
+                'count' => $count,
+                'dataProvider' => $dataProvider,
+                'modelsTransItems' => (empty($modelsTransItems)) ? [new TransferenciaItems] : $modelsTransItems,
+            ]);
+        }else{
+            return $this->goBack();
+        }
     }
 
     public function actionUpdate($id){
