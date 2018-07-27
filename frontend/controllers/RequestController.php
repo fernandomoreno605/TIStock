@@ -87,7 +87,6 @@ class RequestController extends Controller
             $model->request_status = 'On hold';
 
             if ($model->save()){
-
                 $query = Hoteles::find()
                     ->asArray()
                     ->all();
@@ -95,7 +94,6 @@ class RequestController extends Controller
 
                 foreach ($query as $item){
                     if ($item['hotel_id'] != $model->hotel_made_id){
-                        $hotels = Hoteles::findOne(['hotel_id' => $item['hotel_id']]);
                         $comment = new Comments();
                         $comment->hoteles_hotel_id = $item['hotel_id'];
                         $comment->url = 'index.php?r=request/view&id='.$model->request_id;

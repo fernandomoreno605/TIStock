@@ -154,7 +154,6 @@ class ProductosController extends Controller
                 $model->file = UploadedFile::getInstance($model,'file');
                 $model->file->saveAs('product/'.$imageName.'.'.$model->file->extension);
                 $model->product_image = 'product/'.$imageName.'.'.$model->file->extension;
-
             }
             $model->save();
             return $this->redirect(['view', 'id' => $model->product_id]);
