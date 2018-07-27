@@ -340,26 +340,6 @@ class TransferenciasController extends Controller
         if (($model = Transferencias::findOne($id)) !== null) {
             return $model;
         }
-
         throw new NotFoundHttpException('The requested page does not exist.');
     }
-    public function successful(){
-        $alert = '<div class="alert alert-success alert-dismissable" role="alert">
-                    '.Yii::t('app', 'Update Successful').'
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>';
-        return $alert;
-    }
-    public function error(){
-        $alert = '<div class="alert alert-danger alert-dismissable" role="alert">
-                    '.Yii::t('app', 'Please fill all the fields').'
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>';
-        return $alert;
-    }
-
 }

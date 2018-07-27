@@ -2,17 +2,15 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-/* @var $this yii\web\View */
-/* @var $model frontend\models\User */
-/* @var $form yii\widgets\ActiveForm */
-$this->title = Yii::t('app', 'Change Password');
+
+$this->title = Yii::t('app', 'Change Password').': '.$model->username;
+
 ?>
 <div class="form">
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php
-        echo $model->first_name.' '.$model->last_name;
-        if ($alert != null){
+        if (isset($alert)){
             echo $alert;
         }
     ?>

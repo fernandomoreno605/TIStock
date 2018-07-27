@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-
+use kartik\dialog\Dialog;
 $this->title = $model->hotel_name;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Hoteles'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
@@ -11,7 +11,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
+    <p class="option-buttons">
+        <?= Dialog::widget(['overrideYiiConfirm' => true]); ?>
         <?= Html::a(' <i class="glyphicon glyphicon-open"></i> '.Yii::t('app', 'Update'), ['update', 'id' => $model->hotel_id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a(' <i class="glyphicon glyphicon-trash"></i> '.Yii::t('app', 'Delete'), ['delete', 'id' => $model->hotel_id], [
             'class' => 'btn btn-danger',

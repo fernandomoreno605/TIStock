@@ -190,25 +190,6 @@ class ProductosController extends Controller
         return $this->redirect(['index']);
     }
 
-    public function successful(){
-        $alert = '<div class="alert alert-success alert-dismissable" role="alert">
-                    '.Yii::t('app', 'Update Successful').'
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>';
-        return $alert;
-    }
-    public function error(){
-        $alert = '<div class="alert alert-danger alert-dismissable" role="alert">
-                    '.Yii::t('app', 'The password doesn\'t match').'
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>';
-        return $alert;
-    }
-
     protected function findModel($id)
     {
         if (($model = Productos::findOne($id)) !== null) {

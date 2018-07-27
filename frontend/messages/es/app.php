@@ -11,6 +11,7 @@
      'Any Type' => 'Cualquier Tipo',
      'Any User' => 'Cualquier Usuario',
      'Are you sure you want to delete this item?' => '¿Está seguro de eliminar este elemento?',
+     'Are you sure you want to sign out?' => '¿Estás seguro de cerrar sesión?',
      'Assign To:' => 'Asignar a:',
      'Assignation of Items' => 'Asignacion de Elementos',
      'Brand' => 'Marca',

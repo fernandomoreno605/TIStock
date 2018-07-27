@@ -2,10 +2,8 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-use kartik\grid\GridView;
-
-/* @var $this yii\web\View */
-/* @var $model frontend\models\Productos */
+use kartik\dialog\DialogAsset;
+use kartik\dialog\Dialog;
 
 $this->title = $model->product_name;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app','Products'), 'url' => ['index']];
@@ -16,6 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p class="option-buttons">
+        <?= Dialog::widget(['overrideYiiConfirm' => true]); ?>
         <?= Html::a(' <i class="glyphicon glyphicon-open"></i> '.Yii::t('app','Update'), ['update', 'id' => $model->product_id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a(' <i class="glyphicon glyphicon-trash"></i> '.Yii::t('app','Delete'), ['delete', 'id' => $model->product_id], [
             'class' => 'btn btn-danger',

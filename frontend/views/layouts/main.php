@@ -7,12 +7,14 @@ use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
 use frontend\models\CommentsSearch;
-
+use kartik\dialog\Dialog;
 $comentariosHotel = new CommentsSearch();
 
 AppAsset::register($this);
 
 ?>
+<?= Dialog::widget(['overrideYiiConfirm' => true]); ?>
+
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
@@ -110,7 +112,12 @@ AppAsset::register($this);
                 .Html::beginForm(['/site/logout'], 'post')
                 .Html::submitButton(
                     Yii::t('app','Sign Out'),
-                    ['class' => 'btn btn-default btn-flat']
+                    ['class' => 'btn btn-default btn-flat',
+                        'data' => [
+                            'confirm' => Yii::t('app','Are you sure you want to sign out?'),
+                            'method' => 'post',
+                        ]
+                    ]
                 ).Html::endForm().'
                 </div>
               </li>

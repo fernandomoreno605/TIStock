@@ -184,14 +184,4 @@ class RequestController extends Controller
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
-    public function successful(){
-        $alert = '<div class="alert alert-success alert-dismissable" role="alert">
-                    '.Yii::t('app', 'Please contact the hotel').'
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>';
-        return $alert;
-    }
-
 }

@@ -2,20 +2,12 @@
 namespace frontend\controllers;
 
 use common\models\LoginFormCommon;
-use frontend\models\Hoteles;
 use frontend\models\HotelesSearch;
 use frontend\models\User;
 use Yii;
-use yii\base\InvalidParamException;
-use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-use common\models\LoginForm;
-use frontend\models\PasswordResetRequestForm;
-use frontend\models\ResetPasswordForm;
-use frontend\models\SignupForm;
-use frontend\models\ContactForm;
 use frontend\models\Comments;
 use frontend\models\AuthHotelSearch;
 
@@ -62,6 +54,10 @@ class SiteController extends Controller
         ];
     }
 
+    /**
+     * when the user made a click on the notification and is redirect to the url allowed
+     * in the notification, change the status in the database to 1 that's equal to saw
+     **/
     public function actionSee(){
         if (isset($_POST['lang'])){
             $id = $_POST['lang'];
@@ -72,16 +68,11 @@ class SiteController extends Controller
             }
         }
     }
-
-    public function actionErase(){
-        if (isset($_POST['id'])){
-            $id = $_POST['id'];
-            if ($id != null){
-                $query = Comments::findOne($id);
-                $query->delete();
-            }
-        }
-    }
+    /**
+     * when the user select another hotel in the float buttons of the main view,
+     * changes the current hotel id to display all related whit the hotel, like a
+     * products, loans, etc.
+     **/
 
     public function actionChange(){
         if (isset($_POST['h'])){
@@ -91,19 +82,36 @@ class SiteController extends Controller
             $_SESSION['current_hotel_name'] = $name;
         }
     }
-
+    /**
+     * the function erase the notification from the database when the user made a click in the
+     * "x" symbol
+     **/
+    public function actionErase(){
+        if (isset($_POST['id'])){
+            $id = $_POST['id'];
+            if ($id != null){
+                $query = Comments::findOne($id);
+                $query->delete();
+            }
+        }
+    }
+    /**
+     * return the main view
+     */
     public function actionIndex()
     {
         return $this->render('index');
     }
-
+    /**
+     *return the view login and make the process of get the data of the logged user
+     */
     public function actionLogin()
     {
         $this->layout = 'loginLayout';
+        //if the user are logged return the main view
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
-
         $model = new LoginFormCommon();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
 
@@ -116,7 +124,8 @@ class SiteController extends Controller
 
             $searchPermissionsModel = new AuthHotelSearch();
             $permissions = $searchPermissionsModel->permissionsList($id);
-            //Setting session data
+
+            //Setting session data of the logged user
             $_SESSION['user_type'] = $userData->user_type;
             $_SESSION['user_id'] = $id;
             $_SESSION['current_hotel']= $idHotel;
@@ -129,7 +138,6 @@ class SiteController extends Controller
             return $this->goBack();
         } else {
             $model->password = '';
-
             return $this->render('login', [
                 'model' => $model,
             ]);
@@ -141,7 +149,9 @@ class SiteController extends Controller
         Yii::$app->user->logout();
         return $this->goHome();
     }
-
+    /**
+     *the function language changes the application language
+     */
     public function actionLanguage(){
         if (isset($_POST['lang'])){
             Yii::$app->language = $_POST['lang'];

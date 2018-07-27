@@ -14,6 +14,12 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'rowOptions'=>function($model){
+            if ($model ->prestamo_status !='on loan') {
+
+                return ['class' => 'success'];
+            }
+        },
         'columns' => [
             [
                 'class' => 'kartik\grid\ExpandRowColumn',

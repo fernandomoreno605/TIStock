@@ -9,14 +9,8 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
-/**
- * HotelesController implements the CRUD actions for Hoteles model.
- */
 class HotelesController extends Controller
 {
-    /**
-     * {@inheritdoc}
-     */
     public function behaviors()
     {
         return [
@@ -47,8 +41,12 @@ class HotelesController extends Controller
      * Lists all Hoteles models.
      * @return mixed
      */
+
     public function actionIndex()
     {
+        if ($_SESSION['user_type'] != 'admin'){
+            return $this->goBack();
+        }
         $searchModel = new HotelesSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -66,6 +64,9 @@ class HotelesController extends Controller
      */
     public function actionView($id)
     {
+        if ($_SESSION['user_type'] != 'admin'){
+            return $this->goBack();
+        }
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -78,6 +79,9 @@ class HotelesController extends Controller
      */
     public function actionCreate()
     {
+        if ($_SESSION['user_type'] != 'admin'){
+            return $this->goBack();
+        }
         $model = new Hoteles();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -98,6 +102,9 @@ class HotelesController extends Controller
      */
     public function actionUpdate($id)
     {
+        if ($_SESSION['user_type'] != 'admin'){
+            return $this->goBack();
+        }
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -108,7 +115,6 @@ class HotelesController extends Controller
             'model' => $model,
         ]);
     }
-
     /**
      * Deletes an existing Hoteles model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
@@ -118,8 +124,10 @@ class HotelesController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+        if ($_SESSION['user_type'] != 'admin'){
+            return $this->goBack();
+        }
+            $this->findModel($id)->delete();
         return $this->redirect(['index']);
     }
 
@@ -135,7 +143,6 @@ class HotelesController extends Controller
         if (($model = Hoteles::findOne($id)) !== null) {
             return $model;
         }
-
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
 }

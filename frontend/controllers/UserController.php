@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\widgets\Alert;
 use Yii;
 use frontend\models\User;
 use frontend\models\UserSearch;
@@ -13,7 +14,7 @@ use frontend\models\HotelesSearch;
 use frontend\models\AuthHotel;
 use frontend\models\Hoteles;
 use frontend\models\AuthHotelSearch;
-
+use frontend\views\alerts\Alerts;
 class UserController extends Controller
 {
     public function behaviors()
@@ -114,20 +115,20 @@ class UserController extends Controller
         if ($_SESSION['user_type']!='admin'){
             return $this->render('common/view', [
                 'model' => $this->findModel($_SESSION['user_id']),
-                'alert' => null,
             ]);
         }
         else{
             return $this->render('admin/view', [
                 'model' => $this->findModel($id),
                 'dataProvider' => $dataProvider,
-                'alert' => null,
             ]);
 
         }
     }
 
     public function actionPassword($id){
+        //condition: if the user is common
+        $alert = new Alerts();
         if ($_SESSION['user_type']!= 'admin'){
             $model = $this->findModel($_SESSION['user_id']);
             $model->password = null;
@@ -138,12 +139,12 @@ class UserController extends Controller
                         $model->save();
                         return $this->render('common/view', [
                             'model' => $this->findModel($_SESSION['user_id']),
-                            'alert' => $this->successful(),
+                            'alert' => $alert->updateAlert(),
                         ]);
                     }
                     return $this->render('common/_password',[
                         'model' => $model,
-                        'alert' => $this->voidFields(),
+                        'alert' => $alert->voidFields(),
                     ]);
                 }
                 else{
@@ -151,15 +152,17 @@ class UserController extends Controller
                     $model->confirm_password = null;
                     return $this->render('common/_password',[
                         'model' => $model,
-                        'alert' => $this->error(),
+                        'alert' => $alert->notMatch(),
                     ]);
                 }
             }
             return $this->render('common/_password',[
                 'model' => $model,
-                'alert' => null,
             ]);
-        }else{
+        }//end of the part of commun user
+
+        //start of admin user
+        else{
 
             $model = $this->findModel($id);
             $model->password = null;
@@ -180,9 +183,10 @@ class UserController extends Controller
                             'alert' => $this->successful(),
                         ]);
                     }
+
                     return $this->render('admin/_password',[
                         'model' => $model,
-                        'alert' => $this->voidFields(),
+                        'alert' => $alert->voidFields(),
                     ]);
                 }
                 else{
@@ -190,19 +194,19 @@ class UserController extends Controller
                     $model->confirm_password = null;
                     return $this->render('admin/_password',[
                         'model' => $model,
-                        'alert' => $this->error(),
+                        'alert' => $alert->notMatch(),
                     ]);
                 }
             }
             return $this->render('admin/_password',[
                 'model' => $model,
-                'alert' => null,
             ]);
-        }
+        }//end of admin user
     }
 
     public function actionUpdate($id)
     {
+        $alert = new Alerts();
         if ($_SESSION['user_type'] != 'admin'){
             $model = $this->findModel($_SESSION['user_id']);
 
@@ -220,11 +224,10 @@ class UserController extends Controller
                     $_SESSION['image'] = $model->user_image;
                     return $this->render('common/view',[
                         'model' => $this->findModel($_SESSION['user_id']),
-                        'alert' => $this->successful(),
+                        'alert' => $alert->updateAlert(),
                     ]);
                 }
             }
-
             return $this->render('common/update', [
                 'model' => $model,
             ]);
@@ -253,36 +256,6 @@ class UserController extends Controller
                 'hotelList' => $hotelList,
             ]);
         }
-    }
-
-    public function successful(){
-        $alert = '<div class="alert alert-success alert-dismissable" role="alert">
-                    '.Yii::t('app', 'Update Successful').'
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>';
-        return $alert;
-    }
-
-    public function error(){
-        $alert = '<div class="alert alert-danger alert-dismissable" role="alert">
-                    '.Yii::t('app', 'The password doesn\'t match').'
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>';
-        return $alert;
-    }
-
-    public function voidFields(){
-        $alert = '<div class="alert alert-danger alert-dismissable" role="alert">
-                    '.Yii::t('app', 'Please fill all the fields').'
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>';
-        return $alert;
     }
 
     protected function findModel($id)
@@ -331,7 +304,6 @@ class UserController extends Controller
                 $list = $list.'<label>
 							<input type="checkbox" value="'.$item['hotel_id'].'"name="User[permissions][]"> '
                     .$item['hotel_name'].'</label><br/>';
-
             }
         }
         $list=$list.'</div>';

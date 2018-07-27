@@ -21,6 +21,12 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'rowOptions'=>function($model){
+            if ($model ->product_status !='active') {
+
+                return ['class' => 'danger'];
+            }
+        },
         'columns' => [
             'product_name',
             ['attribute' => 'hoteles_hotel_id',

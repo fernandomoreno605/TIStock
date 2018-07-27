@@ -19,6 +19,11 @@ $this->params['breadcrumbs'][] = $this->title;
         //'resizableColumns'=>true,
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'rowOptions'=>function($model){
+            if ($model ->transferencia_status !='to deliver') {
+                return ['class' => 'success'];
+            }
+        },
         'columns' => [
             [
                 'class' => 'kartik\grid\ExpandRowColumn',
