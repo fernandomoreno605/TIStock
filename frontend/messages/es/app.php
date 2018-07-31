@@ -36,7 +36,7 @@
      'Delivery Date' => 'Fecha de Entrega',
      'Destination' => 'Destino',
      'Details' => 'Detalles',
-     'English' => 'Ingles',
+     'English' => 'Inglés',
      'First Name' => 'Nombre',
      'First Select a Product' => 'Primero seleccione un producto',
      'Good Job' => 'A buena hora',

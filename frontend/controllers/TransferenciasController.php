@@ -335,6 +335,15 @@ class TransferenciasController extends Controller
         return $this->redirect(['index']);
     }
 
+    public function actionSelect(){
+        $productProvider = new ProductosSearch();
+        $productList = $productProvider->productsAsArray();
+        return $this->render('common/step1',
+            [
+                'productList' => $productList,
+            ]);
+    }
+
     protected function findModel($id)
     {
         if (($model = Transferencias::findOne($id)) !== null) {

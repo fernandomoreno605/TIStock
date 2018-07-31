@@ -104,7 +104,6 @@ class PrestamosController extends Controller
         $modelsPrestamosArticulo= [new PrestamoArticulos];
         $model = new Prestamos();
 
-
         if ($model->load(Yii::$app->request->post())) {
 
             $model->users_user_id = $_SESSION['user_id'];

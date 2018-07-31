@@ -8,6 +8,7 @@ use frontend\assets\AppAsset;
 use common\widgets\Alert;
 use frontend\models\CommentsSearch;
 use kartik\dialog\Dialog;
+
 $comentariosHotel = new CommentsSearch();
 
 AppAsset::register($this);
@@ -106,19 +107,21 @@ AppAsset::register($this);
               </li>
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="index.php?r=user/view&id='.$_SESSION['user_id'].'" class="btn btn-default btn-flat">'.Yii::t('app','Profile').'</a>
+                  <a href="index.php?r=user/view&id='.$_SESSION['user_id'].'" class="btn btn-default btn-flat">
+                    '.Yii::t('app','Profile').'
+                  </a>
                 </div>
-                <div class="pull-right">'
-                .Html::beginForm(['/site/logout'], 'post')
-                .Html::submitButton(
-                    Yii::t('app','Sign Out'),
-                    ['class' => 'btn btn-default btn-flat',
-                        'data' => [
-                            'confirm' => Yii::t('app','Are you sure you want to sign out?'),
-                            'method' => 'post',
+                <div class="pull-right">
+                    '.Html::beginForm(['/site/logout'], 'post')
+                    .Html::submitButton(
+                        Yii::t('app','Sign Out'),
+                        ['class' => 'btn btn-default btn-flat',
+                            'data' => [
+                                'confirm' => Yii::t('app','Are you sure you want to sign out?'),
+                                'method' => 'post',
+                            ]
                         ]
-                    ]
-                ).Html::endForm().'
+                    ).Html::endForm().'
                 </div>
               </li>
             </ul>
